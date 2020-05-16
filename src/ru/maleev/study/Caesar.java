@@ -1,10 +1,10 @@
-package ru.maleev.study.exersises;
+package ru.maleev.study;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {               // программа реализует шифр Цезаря - сдвиг всех алфавитных символов строки на определенное число символов вправо
+public class Caesar {               // программа реализует шифр Цезаря - сдвиг всех алфавитных символов строки на определенное число символов вправо
 
     public static int key = 15;   //ввести проверку целого и неотрицательного key
     public static void main(String[] args) {
@@ -83,4 +83,12 @@ public class Main {               // программа реализует ши�
         }
         return String.valueOf(resultString);
     }
+
+//    public static List getAlphabet_en {
+//        char [] arr_abc = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+//        List<Character> alphabet_en = new ArrayList<Character>();
+//        for (char ch: arr_abc) alphabet_en.add(ch);
+//        return alphabet_en;
+//    }
+
 }
