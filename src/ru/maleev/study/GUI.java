@@ -1,8 +1,6 @@
 package ru.maleev.study;
 
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,7 +32,7 @@ public class GUI {
         //Создадим кнопки
         JButton encript = new JButton("Зашифровать");
         JButton decript = new JButton("Расшифровать");
-        JButton copyButton = new JButton("Скопировать");
+        JButton copyButton = new JButton("Скопировать в исходную");
 
 
         //Событие для кнопки "Зашифровать"
@@ -49,12 +47,12 @@ public class GUI {
                         textOutput.setText("Введите корректный ключ шифрования");
                         textKey.setText(null);
                     }
+                    // Если ключ верный, зашифровываем сообщение
                     else {
+                        int key = Integer.parseInt(keyString);
                         Caesar newCaesar = new Caesar();
-                        //newCaesar.encript();
-                        //Integer key = Integer.valueOf(keyString);
-                        // String encriptedString = encript (string,key)
-                        // textOutput.setText(encriptedString);
+                        String encriptedString = newCaesar.encript(string, key);
+                        textOutput.setText(encriptedString);
                     }
                 }
             }
@@ -64,7 +62,23 @@ public class GUI {
         decript.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //Действие
-                //textOutput.setText(decriptedString);
+                String string = textInput.getText();
+                // Считываем ключ и проверяем значение
+                String keyString = textKey.getText();
+                char [] keyArr = keyString.toCharArray();
+                for (char ch: keyArr) {
+                    if (!Character.isDigit(ch)) {
+                        textOutput.setText("Введите корректный ключ шифрования");
+                        textKey.setText(null);
+                    }
+                    // Если ключ верный, зашифровываем сообщение
+                    else {
+                        int key = Integer.parseInt(keyString);
+                        Caesar newCaesar = new Caesar();
+                        String decriptedString = newCaesar.decript(string, key);
+                        textOutput.setText(decriptedString);
+                    }
+                }
             }
         });
 
@@ -73,9 +87,7 @@ public class GUI {
         copyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //Действие
-                StringSelection stringSelection = new StringSelection(textOutput.getText());
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(stringSelection, null);
+                textInput.setText(textOutput.getText());
             }
         });
 
