@@ -25,8 +25,12 @@ public class GUI {
         JLabel labelKey = new JLabel("Ключ шифрования");
 
         //Текстовые поля
-        JTextField textInput = new JTextField(24);
-        JTextField textOutput = new JTextField(24);
+        JTextArea textInput = new JTextArea(1,20);
+        textInput.setLineWrap(true);
+        textInput.setWrapStyleWord(true);
+        JTextArea textOutput = new JTextArea(1,20);
+        textOutput.setLineWrap(true);
+        textOutput.setWrapStyleWord(true);
         JTextField textKey = new JTextField(5);
 
         //Создадим кнопки
@@ -51,7 +55,7 @@ public class GUI {
                     else {
                         int key = Integer.parseInt(keyString);
                         Caesar newCaesar = new Caesar();
-                        String encriptedString = newCaesar.encript(string, key);
+                        String encriptedString = newCaesar.encrypt(string, key);
                         textOutput.setText(encriptedString);
                     }
                 }
@@ -75,7 +79,7 @@ public class GUI {
                     else {
                         int key = Integer.parseInt(keyString);
                         Caesar newCaesar = new Caesar();
-                        String decriptedString = newCaesar.decript(string, key);
+                        String decriptedString = newCaesar.decrypt(string, key);
                         textOutput.setText(decriptedString);
                     }
                 }

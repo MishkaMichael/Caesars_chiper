@@ -1,5 +1,6 @@
 package ru.maleev.study;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Caesar {               // программа реализует шифр Цезаря - сдвиг всех алфавитных символов строки на определенное число символов вправо
@@ -9,58 +10,48 @@ public class Caesar {               // программа реализует ш�
         System.out.println("Введите текст");
         Scanner in = new Scanner(System.in);
         String s = in.nextLine();
-        String encriptString = encript(s, key);
-        System.out.println("Encript:" + encriptString);
-        String decriptString = decript(s, key);
-        System.out.println("Decript:" + decriptString);
+        String encriptString = encrypt(s, key);
+        System.out.println("Encrypt:" + encriptString);
+        String decriptString = decrypt(s, key);
+        System.out.println("Decrypt:" + decriptString);
         System.out.println('\u0950'); // Знак Ом
     }
 
-    public static String encript(String s, int key) {  // метод шифрования
+    public static String encrypt(String s, int key) {  // метод шифрования
         char[] charArray = s.toCharArray();
         StringBuilder resultString = new StringBuilder();
         for (char ch : charArray) {
-            if (Alphabet.en.contains(ch)) {
-                ch = (char) Alphabet.en.get((Alphabet.en.indexOf(ch) + key) % Alphabet.en.size());
-            } else if (Alphabet.en_upper.contains(ch)) {
-                ch = (char) Alphabet.en_upper.get((Alphabet.en_upper.indexOf(ch) + key) % Alphabet.en_upper.size());
-            } else if (Alphabet.ru.contains(ch)) {
-                ch = (char) Alphabet.ru.get((Alphabet.ru.indexOf(ch) + key) % Alphabet.ru.size());
-            } else if (Alphabet.ru_upper.contains(ch)) {
-                ch = (char) Alphabet.ru_upper.get((Alphabet.ru_upper.indexOf(ch) + key) % Alphabet.ru_upper.size());
-            }
+            if (Alphabet.en.contains(ch)) { ch = encryption(Alphabet.en, ch, key);}
+            else if (Alphabet.en_upper.contains(ch)) { ch = encryption(Alphabet.en_upper, ch, key);}
+            else if (Alphabet.ru.contains(ch)) { ch = encryption(Alphabet.ru, ch, key);}
+            else if (Alphabet.ru_upper.contains(ch)) { ch = encryption(Alphabet.ru_upper, ch, key);}
             resultString.append(ch);
         }
         return String.valueOf(resultString);
     }
 
-
-    public static String decript (String s, int key) {  // метод расшифровщика шифра
-        char [] charArray = s.toCharArray();
+    public static String decrypt(String s, int key) {  // метод расшифровщика шифра
+        char[] charArray = s.toCharArray();
         StringBuilder resultString = new StringBuilder();
-        for (char ch: charArray) {
-            if (Alphabet.en.contains(ch)) {
-                if ((Alphabet.en.indexOf(ch) - key % Alphabet.en.size()) < 0 ) {
-                    ch = (char) Alphabet.en.get(Alphabet.en.size() - (key % Alphabet.en.size() - Alphabet.en.indexOf(ch)));
-                } else ch = (char) Alphabet.en.get(Alphabet.en.indexOf(ch) - key % Alphabet.en.size());
-
-            } else if (Alphabet.en_upper.contains(ch)) {
-                if ((Alphabet.en_upper.indexOf(ch) - key % Alphabet.en_upper.size()) < 0 ) {
-                    ch = (char) Alphabet.en_upper.get(Alphabet.en_upper.size() - (key % Alphabet.en_upper.size() - Alphabet.en_upper.indexOf(ch)));
-                } else ch = (char) Alphabet.en_upper.get(Alphabet.en_upper.indexOf(ch) - key % Alphabet.en_upper.size());
-
-            } else if (Alphabet.ru.contains(ch)) {
-                if ((Alphabet.ru.indexOf(ch) - key % Alphabet.ru.size()) < 0 ) {
-                    ch = (char) Alphabet.ru.get(Alphabet.ru.size() - (key % Alphabet.ru.size() - Alphabet.ru.indexOf(ch)));
-                } else ch = (char) Alphabet.ru.get(Alphabet.ru.indexOf(ch) - key % Alphabet.ru.size());
-
-            } else if (Alphabet.ru_upper.contains(ch)) {
-                if ((Alphabet.ru_upper.indexOf(ch) - key % Alphabet.ru_upper.size()) < 0 ) {
-                    ch = (char) Alphabet.ru_upper.get(Alphabet.ru_upper.size() - (key % Alphabet.ru_upper.size() - Alphabet.ru_upper.indexOf(ch)));
-                } else ch = (char) Alphabet.ru_upper.get(Alphabet.ru_upper.indexOf(ch) - key % Alphabet.ru_upper.size());
-            }
+        for (char ch : charArray) {
+            if (Alphabet.en.contains(ch)) { ch = decryption(Alphabet.en, ch, key);}
+            else if (Alphabet.en_upper.contains(ch)) { ch = decryption(Alphabet.en_upper, ch, key);}
+            else if (Alphabet.ru.contains(ch)) { ch = decryption(Alphabet.ru, ch, key);}
+            else if (Alphabet.ru_upper.contains(ch)) { ch = decryption(Alphabet.ru_upper, ch, key);}
             resultString.append(ch);
         }
         return String.valueOf(resultString);
+    }
+
+    public static char encryption(List alphabet, char ch, int key) {
+            ch = (char) alphabet.get((alphabet.indexOf(ch) + key) % alphabet.size());
+            return ch;
+    }
+
+    public static char decryption(List alphabet, char ch, int key) {
+        if ((alphabet.indexOf(ch) - key % alphabet.size()) < 0) {
+            ch = (char) alphabet.get(alphabet.size() - (key % alphabet.size() - alphabet.indexOf(ch)));
+        } else ch = (char) alphabet.get(alphabet.indexOf(ch) - key % alphabet.size());
+        return ch;
     }
 }
