@@ -38,80 +38,66 @@ public class GUI {
         JTextField textKey = new JTextField(5);
 
         //Создадим кнопки
-        JButton encript = new JButton("Зашифровать");
-        JButton decript = new JButton("Расшифровать");
+        JButton encrypt = new JButton("Зашифровать");
+        JButton decrypt = new JButton("Расшифровать");
         JButton copyButton = new JButton("Скопировать в исходную");
 
 
         //Событие для кнопки "Зашифровать"
-        encript.addActionListener(new ActionListener() {
+        encrypt.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String string = textInput.getText();
-                // Считываем ключ и проверяем значение
-                String keyString = textKey.getText();
-                char [] keyArr = keyString.toCharArray();
-                for (char ch: keyArr) {
-                    if (!Character.isDigit(ch)) {
-                        textOutput.setText("Введите корректный ключ шифрования");
-                        textKey.setText(null);
-                    }
-                    // Если ключ верный, зашифровываем сообщение
-                    else {
-                        int key = Integer.parseInt(keyString);
-                        Caesar newCaesar = new Caesar();
-                        String encriptedString = newCaesar.encrypt(string, key);
-                        textOutput.setText(encriptedString);
-                    }
+                try {
+                    int key = Integer.parseInt(textKey.getText());
+                    if (key >= 0) {
+                        String encryptedString = Caesar.encrypt(string, key);
+                        textOutput.setText(encryptedString);
+                    } else
+                        textOutput.setText("Введите неотрицательный ключ шифрования");
+                }
+                catch (NumberFormatException ex) {
+                    textOutput.setText("Введите корректный ключ шифрования");
+                    textKey.setText(null);
                 }
             }
         });
 
         //Событие для кнопки "Расшифровать"
-        decript.addActionListener(new ActionListener() {
+        decrypt.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //Действие
                 String string = textInput.getText();
-                // Считываем ключ и проверяем значение
-                String keyString = textKey.getText();
-                char [] keyArr = keyString.toCharArray();
-                for (char ch: keyArr) {
-                    if (!Character.isDigit(ch)) {
-                        textOutput.setText("Введите корректный ключ шифрования");
-                        textKey.setText(null);
-                    }
-                    // Если ключ верный, зашифровываем сообщение
-                    else {
-                        int key = Integer.parseInt(keyString);
-                        Caesar newCaesar = new Caesar();
-                        String decriptedString = newCaesar.decrypt(string, key);
+                try {
+                    int key = Integer.parseInt(textKey.getText());
+                    if (key >= 0) {
+                        String decriptedString = Caesar.decrypt(string, key);
                         textOutput.setText(decriptedString);
-                    }
+                    } else
+                        textOutput.setText("Введите неотрицательный ключ шифрования");
+                }
+                catch (NumberFormatException ex) {
+                    textOutput.setText("Введите корректный ключ шифрования");
+                    textKey.setText(null);
                 }
             }
         });
 
-
         //Событие для кнопки "Скопировать"
         copyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //Действие
                 textInput.setText(textOutput.getText());
             }
         });
 
-
         //Добавим кнопки и поля на панель
-
         topPanel.add(labelInput);
         topPanel.add(textInput);
         topPanel.add(labelKey);
         topPanel.add(textKey);
-        centerPanel.add(encript);
-        centerPanel.add(decript);
+        centerPanel.add(encrypt);
+        centerPanel.add(decrypt);
         bottomPanel.add(labelOutput);
         bottomPanel.add(textOutput);
         bottomPanel.add(copyButton);
-
 
         //Добавим панели в окно и настроим
         FRAME.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
