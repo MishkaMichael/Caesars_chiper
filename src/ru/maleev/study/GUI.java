@@ -7,12 +7,16 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class GUI {
-    public static void run() {
+    // this is FIELD)))
+    static final JFrame FRAME = new JFrame("Caesar cipher");
+    //если field static то он пишется с большых буквы всегда.
+    // между словами "_", например THIS_IS_TEST_FIELD_STATIC
+    static public void run() {
         //Создадим окно, настраиваем иконку, закрытие по крестику
-        final JFrame frame = new JFrame("Caesar cipher");
+
         ImageIcon img = new ImageIcon("java.png");
-        frame.setIconImage(img.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        FRAME.setIconImage(img.getImage());
+        FRAME.setDefaultCloseOperation(FRAME.EXIT_ON_CLOSE);
 
         //Создадим панели
         JPanel bottomPanel = new JPanel();
@@ -110,15 +114,15 @@ public class GUI {
 
 
         //Добавим панели в окно и настроим
-        frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
-        frame.getContentPane().add(BorderLayout.NORTH, topPanel);
-        frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
+        FRAME.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
+        FRAME.getContentPane().add(BorderLayout.NORTH, topPanel);
+        FRAME.getContentPane().add(BorderLayout.CENTER, centerPanel);
 
-        frame.pack();
-        frame.setSize(700, 200);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setResizable(false);
+        FRAME.pack();
+        FRAME.setSize(700, 200);
+        FRAME.setLocationRelativeTo(null);
+        FRAME.setVisible(true);
+        FRAME.setResizable(true);
     }
 
     public static void main(String[] args) {

@@ -21,22 +21,32 @@ public class Caesar {               // программа реализует ш�
         char[] charArray = s.toCharArray();
         StringBuilder resultString = new StringBuilder();
         for (char ch : charArray) {
-            if (Alphabet.en.contains(ch)) { ch = encryption(Alphabet.en, ch, key);}
-            else if (Alphabet.en_upper.contains(ch)) { ch = encryption(Alphabet.en_upper, ch, key);}
-            else if (Alphabet.ru.contains(ch)) { ch = encryption(Alphabet.ru, ch, key);}
-            else if (Alphabet.ru_upper.contains(ch)) { ch = encryption(Alphabet.ru_upper, ch, key);}
+            ch = encryptChar(key, ch);
             resultString.append(ch);
         }
         return String.valueOf(resultString);
+    }
+
+    private static char encryptChar(int key, char ch) {
+        List<Character> alphabet = returnAlphabetByChar(ch);
+        if (alphabet != null) return encryption(alphabet, ch, key);
+        else return ch;
+    }
+
+    private static List<Character> returnAlphabetByChar(char ch) {
+        for (List<Character> alphabet: Alphabet.all) {
+            if (alphabet.contains(ch)) return alphabet;
+        }
+        return null;
     }
 
     public static String decrypt(String s, int key) {  // метод расшифровщика шифра
         char[] charArray = s.toCharArray();
         StringBuilder resultString = new StringBuilder();
         for (char ch : charArray) {
-            if (Alphabet.en.contains(ch)) { ch = decryption(Alphabet.en, ch, key);}
+            if (Alphabet.en_lower.contains(ch)) { ch = decryption(Alphabet.en_lower, ch, key);}
             else if (Alphabet.en_upper.contains(ch)) { ch = decryption(Alphabet.en_upper, ch, key);}
-            else if (Alphabet.ru.contains(ch)) { ch = decryption(Alphabet.ru, ch, key);}
+            else if (Alphabet.ru_lower.contains(ch)) { ch = decryption(Alphabet.ru_lower, ch, key);}
             else if (Alphabet.ru_upper.contains(ch)) { ch = decryption(Alphabet.ru_upper, ch, key);}
             resultString.append(ch);
         }
